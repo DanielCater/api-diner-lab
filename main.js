@@ -50,6 +50,8 @@ function init() {
   let btn3 = document.getElementById("fetch-joke-setup");
   btn3.addEventListener("click", fetchJokeSetup);
 
+  let btn4 = document.getElementById("number-btn");
+  btn4.addEventListener("click", fetchNumberFact);
 }
 
 function fetchDog() {
@@ -140,7 +142,31 @@ function tellJokeSetup(data) {
   setTimeout(() =>{
     document.getElementById("joke-output").appendChild(punchline);
   },3000);
+
 }
+
+function fetchNumberFact() {
+  let number = document.getElementById("number-input").value;
+  let url = "https://numbersapi.com/" + number;
+
+  fetch(url)
+    .then(statusCheck)
+    .then(resp => resp.text())
+    .then(showNumberFact)
+    .catch(handleNumberError);
+}
+
+function showNumberFact(data) {
+  console.log("Number fact:", data);
+  document.getElementById("number-output").textContent = data;
+}
+
+function handleNumberError(err) {
+  console.error("Something went wrong:", err);
+  document.getElementById("number-output").textContent =
+    "Could not load a number fact.";
+}
+
 
 
 

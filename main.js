@@ -52,7 +52,14 @@ function init() {
 
   let btn4 = document.getElementById("number-btn");
   btn4.addEventListener("click", fetchNumberFact);
+
+  let btn5 = document.getElementById("fetchBadURL-btn");
+  btn5.addEventListener("click", fetchBadURL);
+
+   let btn6 = document.getElementById("fetchNoServer-btn");
+  btn6.addEventListener("click", fetchNoServer);
 }
+
 
 function fetchDog() {
   let url = "https://dog.ceo/api/breeds/image/random";
@@ -81,7 +88,7 @@ async function statusCheck(res) {
 function handleError(err) {
   console.error("Something went wrong:", err);
   document.getElementById("output").textContent =
-    "The kitchen is closed! (Error loading data)";
+    alert("Sorry we got lost in the sauce! \n Please try again later.");
 }
 
 init();
@@ -165,6 +172,23 @@ function handleNumberError(err) {
   console.error("Something went wrong:", err);
   document.getElementById("number-output").textContent =
     "Could not load a number fact.";
+}
+
+function fetchBadURL() {
+  // This URL doesn't exist!
+  fetch("https://dog.ceo/api/breeds/image/DOESNOTEXIST")
+    .then(statusCheck)
+    .then(resp => resp.json())
+    .then(data => console.log(data))
+    .catch(handleError);
+}
+
+function fetchNoServer() {
+  fetch("https://this.server.does.not.exist.xyz/api")
+    .then(statusCheck)
+    .then(resp => resp.json())
+    .then(data => console.log(data))
+    .catch(handleError);
 }
 
 
